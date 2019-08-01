@@ -7,7 +7,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header";
 import Wrapper from "./components/Wrapper";
-import GraphContainer from "./components/GraphContainer";
+import ChartContainer from "./components/ChartContainer";
 // import NowWhat from "./components/NowWhat";
 
 const store = createStore();
@@ -35,7 +35,7 @@ const App = props => (
       <Wrapper>
         <Header />
         {/* <NowWhat /> */}
-        <GraphContainer />
+        <ChartContainer />
         <ToastContainer />
       </Wrapper>
     </Provider>

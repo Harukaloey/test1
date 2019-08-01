@@ -1,13 +1,15 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+// import Typography from "@material-ui/core/Typography";
+import Chart from './Chart';
 import MetricSelector from './MetricSelector';
 
 const useStyles = makeStyles({
   paper: {
     margin: "3%",
-    padding: "20px"
+    padding: "20px",
+    // overflowY: "scroll"
   }
 });
 
@@ -17,9 +19,7 @@ export default () => {
   return (
     <Paper className={classes.paper}>
       <MetricSelector />
-      <Typography variant="h5" component="h3">
-        Chart goes here.
-      </Typography>
+      <Chart />
     </Paper>
   ); 
 }

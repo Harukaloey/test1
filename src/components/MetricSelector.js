@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState, useEffect } from "react";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -9,10 +9,12 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Typography from "@material-ui/core/Typography";
+import { blue, grey } from '@material-ui/core/colors';
 
 const useStyles = makeStyles({
   box: {
-    width: "166px"
+    width: "166px",
+    margin: "2px"
   },
   card: {
     display: "flex",
@@ -30,6 +32,9 @@ const useStyles = makeStyles({
   cardTitle: {
     fontSize: "24px"
   },
+  formLabel: {
+    paddingBottom: "20px"
+  },
   formControl: {
     width: "100%",
     marginBottom: "40px"
@@ -40,9 +45,21 @@ const useStyles = makeStyles({
   }
 });
 
+const EOGCheckbox = withStyles({
+  root: {
+    color: grey[500],
+    '&$checked': {
+      color: blue[900],
+    },
+  },
+  checked: {},
+})(props => <Checkbox color="default" {...props} />);
+
+
 export default () => {
   const classes = useStyles();
-  const [state, setState] = React.useState({
+
+  const [state, setState] = useState({
     tubingPressure: true,
     casingPressure: false,
     oilTemp: false,
@@ -67,12 +84,12 @@ export default () => {
 
   return (
     <FormControl component="fieldset" className={classes.formControl}>
-      <FormLabel component="legend">Select metric:</FormLabel>
+      <FormLabel component="legend" className={classes.formLabel}>Select metric:</FormLabel>
       <FormGroup className={classes.formGroup}>
         <Box className={classes.box}>
           <FormControlLabel
             control={
-              <Checkbox 
+              <EOGCheckbox 
                 checked={tubingPressure} 
                 onChange={handleChange('tubingPressure')} 
                 value="tubingPressure" />
@@ -90,7 +107,7 @@ export default () => {
         <Box className={classes.box}>
           <FormControlLabel
             control={
-              <Checkbox 
+              <EOGCheckbox 
               checked={casingPressure} 
               onChange={handleChange('casingPressure')} 
               value="casingPressure" />
@@ -108,7 +125,7 @@ export default () => {
         <Box className={classes.box}>
           <FormControlLabel
             control={
-              <Checkbox 
+              <EOGCheckbox 
                 checked={oilTemp} 
                 onChange={handleChange('oilTemp')} 
                 value="oilTemp" />
@@ -126,7 +143,7 @@ export default () => {
         <Box className={classes.box}>
           <FormControlLabel
             control={
-              <Checkbox 
+              <EOGCheckbox 
                 checked={flareTemp} 
                 onChange={handleChange('flareTemp')} 
                 value="flareTemp" />
@@ -144,7 +161,7 @@ export default () => {
         <Box className={classes.box}>
           <FormControlLabel
             control={
-              <Checkbox 
+              <EOGCheckbox 
                 checked={waterTemp} 
                 onChange={handleChange('waterTemp')} 
                 value="waterTemp" />
@@ -162,7 +179,7 @@ export default () => {
         <Box className={classes.box}>
           <FormControlLabel
             control={
-              <Checkbox 
+              <EOGCheckbox 
                 checked={injValveOpen} 
                 onChange={handleChange('injValveOpen')}
                 value="injValveOpen" />
