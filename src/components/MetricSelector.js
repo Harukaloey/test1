@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as actions from "../store/actions";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Card from '@material-ui/core/Card';
@@ -55,12 +57,16 @@ const EOGCheckbox = withStyles({
   checked: {},
 })(props => <Checkbox color="default" {...props} />);
 
+const getSelectedMetrics = state => {
+  const { selectedMetrics } = state.selectedMetrics;
+  return { selectedMetrics };
+}
 
 export default () => {
   const classes = useStyles();
-
+  
   const [state, setState] = useState({
-    tubingPressure: true,
+    tubingPressure: false,
     casingPressure: false,
     oilTemp: false,
     flareTemp: false,
@@ -68,17 +74,18 @@ export default () => {
     injValveOpen: false
   });
 
+  // Set selected metric, store in redux
   const handleChange = metricName => event => {
     setState({ 
       ...state, [metricName]: event.target.checked 
     });
   };
 
-  useEffect(
-    () => {
-      console.log(state)
-    }
-  );
+  // useEffect(
+  //   () => {
+      
+  //   }
+  // );
   
   const { tubingPressure, casingPressure, oilTemp, flareTemp, waterTemp, injValveOpen } = state;
 
