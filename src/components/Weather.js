@@ -16,11 +16,11 @@ query($latLong: WeatherQuery!) {
     description
     locationName
     temperatureinCelsius
-  }
+  }                                                                                                                                  
 }
 `;
 
-const getWeather = state => {
+const getWeather = (state) => {
   const { temperatureinFahrenheit, description, locationName } = state.weather;
   return {
     temperatureinFahrenheit,
@@ -45,7 +45,7 @@ const Weather = () => {
     longitude: getLocation.longitude || -95.3698
   };
   const dispatch = useDispatch();
-  
+
   const { temperatureinFahrenheit, description, locationName } = useSelector(
     getWeather
   );

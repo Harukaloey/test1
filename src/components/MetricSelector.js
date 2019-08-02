@@ -57,37 +57,29 @@ const EOGCheckbox = withStyles({
   checked: {},
 })(props => <Checkbox color="default" {...props} />);
 
-const getSelectedMetrics = state => {
-  const { selectedMetrics } = state.selectedMetrics;
-  return { selectedMetrics };
-}
-
 export default () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  // const selectedMetrics = useSelector(state => state.selectedMetrics);
   
-  const [state, setState] = useState({
-    tubingPressure: false,
-    casingPressure: false,
-    oilTemp: false,
-    flareTemp: false,
-    waterTemp: false,
-    injValveOpen: false
-  });
+  // const [state, setState] = useState({
+  //   tubingPressure: false,
+  //   casingPressure: false,
+  //   oilTemp: false,
+  //   flareTemp: false,
+  //   waterTemp: false,
+  //   injValveOpen: false
+  // });
 
   // Set selected metric, store in redux
-  const handleChange = metricName => event => {
-    setState({ 
-      ...state, [metricName]: event.target.checked 
-    });
+  const handleChange = (metricName) => event => {
+    // setState({ 
+    //   ...state, [metricName]: event.target.checked 
+    // });
   };
-
-  // useEffect(
-  //   () => {
-      
-  //   }
-  // );
   
-  const { tubingPressure, casingPressure, oilTemp, flareTemp, waterTemp, injValveOpen } = state;
+  // const { tubingPressure, casingPressure, oilTemp, flareTemp, waterTemp, injValveOpen } = state;
+  const tubingPressure = true;
 
   return (
     <FormControl component="fieldset" className={classes.formControl}>
@@ -97,8 +89,11 @@ export default () => {
           <FormControlLabel
             control={
               <EOGCheckbox 
-                checked={tubingPressure} 
-                onChange={handleChange('tubingPressure')} 
+                // checked={tubingPressure} 
+                onChange={() => dispatch({
+                  type: 'SELECT_METRIC',
+                  payload: 'tubingPressure'
+                })} 
                 value="tubingPressure" />
             }
             label="Tubing Pressure"
@@ -111,7 +106,7 @@ export default () => {
             </CardContent>
           </Card>
         </Box>
-        <Box className={classes.box}>
+        {/* <Box className={classes.box}>
           <FormControlLabel
             control={
               <EOGCheckbox 
@@ -200,7 +195,7 @@ export default () => {
               </Typography>
             </CardContent>
           </Card>
-        </Box>
+        </Box> */}
       </FormGroup>
     </FormControl>
   ); 
