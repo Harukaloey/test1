@@ -1,5 +1,4 @@
 import { SELECT_METRIC } from "../actions";
-// import * as actions from "../actions";
 
 const initialState = {
 	tubingPressure: false,

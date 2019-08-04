@@ -17,12 +17,6 @@ const client = createClient({
   url: "https://react.eogresources.com/graphql"
 });
 
-const heartbeatQuery = `
-query {
-  heartBeat                                                                                                              
-}
-
-`;
 const measurementQuery = `
 query($input: MeasurementQuery) {
   getMeasurements(input: $input) {
@@ -96,20 +90,15 @@ export default () => {
 
 const Chart = () => {
   const classes = useStyles();
-  
-  // const [heartBeatRes] = useQuery({
-  //   query: heartbeatQuery
-  // });
-
-  // const { data, error } = heartBeatRes;
+  const heartBeat = useSelector(state => state.heartBeat);
 
   const [measurementRes] = useQuery({
     query: measurementQuery,
     variables: {
       input: {
         metricName: "oilTemp",
-        before: 1564937515898,
-        after: 1564937515898 - 1800000
+        before: heartBeat.before,
+        after: heartBeat.after
       }
     }
   });
@@ -123,12 +112,9 @@ const Chart = () => {
         return;
       }
       if (!data) return;
-      console.log(data);
+      console.log(data.getMeasurements)
     }
   );
-	
-	// useEffect(() => {
-	// });
 
   return (
     <Box className={classes.chartBox}>

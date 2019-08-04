@@ -18,7 +18,7 @@ const client = createClient({
   url: "https://react.eogresources.com/graphql"
 });
 
-const heartbeatQuery = `
+const heartBeatQuery = `
 query {
   heartBeat                                                                                                              
 }
@@ -34,11 +34,10 @@ export default () => {
 
 const ChartContainer = () => {
   const classes = useStyles();
-
+  const dispatch = useDispatch();
   const [heartBeatRes] = useQuery({
-    query: heartbeatQuery
+    query: heartBeatQuery
   });
-
   const { data, error } = heartBeatRes;
 
   useEffect(
@@ -48,7 +47,11 @@ const ChartContainer = () => {
         return;
       }
       if (!data) return;
-      console.log(data);
+      
+      dispatch({
+        type: "GET_HEARTBEAT",
+        payload: data.heartBeat
+      })
     }
   );
 
