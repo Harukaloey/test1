@@ -89,31 +89,6 @@ export default () => {
   const dispatch = useDispatch();
   const selectedMetrics = useSelector(state => state.selectedMetrics);
 
-  // const [state, setState] = useState({
-  //   tubingPressure: false,
-  //   casingPressure: false,
-  //   oilTemp: false,
-  //   flareTemp: false,
-  //   waterTemp: false,
-  //   injValveOpen: false
-  // });
-
-  // Set selected metric, store in redux
-  // const handleChange = (metricName) => event => {
-  //   setState({
-  //     ...state, [metricName]: event.target.checked
-  //   });
-  // };
-
-  // const {
-  //   tubingPressure,
-  //   casingPressure,
-  //   oilTemp,
-  //   flareTemp,
-  //   waterTemp,
-  //   injValveOpen
-  // } = selectedMetrics;
-
   return (
     <FormControl component="fieldset" className={classes.formControl}>
       <FormLabel component="legend" className={classes.formLabel}>
@@ -126,7 +101,7 @@ export default () => {
               <FormControlLabel
                 control={
                   <EOGCheckbox
-                    checked={selectedMetrics[i]}
+                    checked={selectedMetrics[metric.value]}
                     onChange={() =>
                       dispatch({
                         type: "SELECT_METRIC",
@@ -151,151 +126,6 @@ export default () => {
             </Box>
           );
         })}
-
-        {/* <Box className={classes.box}>
-          <FormControlLabel
-            control={
-              <EOGCheckbox
-                checked={tubingPressure}
-                onChange={() =>
-                  dispatch({
-                    type: "SELECT_METRIC",
-                    payload: "tubingPressure"
-                  })
-                }
-                value="tubingPressure"
-              />
-            }
-            label="Tubing Pressure"
-          />
-          <Card className={classes.card}>
-            <CardContent className={classes.cardContent}>
-              <Typography className={classes.cardTitle} color="textSecondary">
-                {10000}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Box>
-        <Box className={classes.box}>
-          <FormControlLabel
-            control={
-              <EOGCheckbox
-                checked={casingPressure}
-                onChange={() =>
-                  dispatch({
-                    type: "SELECT_METRIC",
-                    payload: "casingPressure"
-                  })
-                }
-                value="casingPressure"
-              />
-            }
-            label="Casing Pressure"
-          />
-          <Card className={classes.card}>
-            <CardContent className={classes.cardContent}>
-              <Typography className={classes.cardTitle} color="textSecondary">
-                {10000}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Box>
-        <Box className={classes.box}>
-          <FormControlLabel
-            control={
-              <EOGCheckbox
-                checked={oilTemp}
-                onChange={() =>
-                  dispatch({
-                    type: "SELECT_METRIC",
-                    payload: "oilTemp"
-                  })
-                }
-                value="oilTemp"
-              />
-            }
-            label="Oil Temp"
-          />
-          <Card className={classes.card}>
-            <CardContent className={classes.cardContent}>
-              <Typography className={classes.cardTitle} color="textSecondary">
-                {10000}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Box>
-        <Box className={classes.box}>
-          <FormControlLabel
-            control={
-              <EOGCheckbox
-                checked={flareTemp}
-                onChange={() =>
-                  dispatch({
-                    type: "SELECT_METRIC",
-                    payload: "flareTemp"
-                  })
-                }
-                value="flareTemp"
-              />
-            }
-            label="Flare Temp"
-          />
-          <Card className={classes.card}>
-            <CardContent className={classes.cardContent}>
-              <Typography className={classes.cardTitle} color="textSecondary">
-                {10000}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Box>
-        <Box className={classes.box}>
-          <FormControlLabel
-            control={
-              <EOGCheckbox
-                checked={waterTemp}
-                onChange={() =>
-                  dispatch({
-                    type: "SELECT_METRIC",
-                    payload: "waterTemp"
-                  })
-                }
-                value="waterTemp"
-              />
-            }
-            label="Water Temp"
-          />
-          <Card className={classes.card}>
-            <CardContent className={classes.cardContent}>
-              <Typography className={classes.cardTitle} color="textSecondary">
-                {10000}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Box>
-        <Box className={classes.box}>
-          <FormControlLabel
-            control={
-              <EOGCheckbox
-                checked={injValveOpen}
-                onChange={() =>
-                  dispatch({
-                    type: "SELECT_METRIC",
-                    payload: "injValveOpen"
-                  })
-                }
-                value="injValveOpen"
-              />
-            }
-            label="Inj Valve Open"
-          />
-          <Card className={classes.card}>
-            <CardContent className={classes.cardContent}>
-              <Typography className={classes.cardTitle} color="textSecondary">
-                {10000}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Box> */}
       </FormGroup>
     </FormControl>
   );
