@@ -11,6 +11,7 @@ import ChartContainer from "./components/ChartContainer";
 // import NowWhat from "./components/NowWhat";
 
 const store = createStore();
+
 const theme = createMuiTheme({
   typography: {
     useNextVariants: true

@@ -8,7 +8,7 @@ import metricReducer from "./reducers/MetricSelector";
 export default () => {
   const rootReducer = combineReducers({
     weather: weatherReducer,
-    metric: metricReducer
+    selectedMetrics: metricReducer
   });
 
   const composeEnhancers = composeWithDevTools({});
