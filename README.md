@@ -2,7 +2,7 @@
 
 A working dashboard which visualizes the real time and historical values of a hypothetical set of equipment in the field. The equipment publishes its data every 1.3 seconds.
 
-![Image description](https://imgur.com/yRIuZs8)
+![Flare Temperature](/src/img/flareTemp.jpg)
 
 This assessment was bespoke handcrafted for davidmontanez-react-visualization.
 
