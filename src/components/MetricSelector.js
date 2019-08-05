@@ -11,6 +11,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import { blue, grey } from "@material-ui/core/colors";
+import { Provider, createClient, useQuery } from "urql";
 
 const useStyles = makeStyles({
   box: {
@@ -84,10 +85,46 @@ const metricArray = [
   }
 ];
 
+const client = createClient({
+  url: "https://react.eogresources.com/graphql"
+});
+
+const measurementQuery = `
+query($input: MeasurementQuery) {
+  getMeasurements(input: $input) {
+    metric,
+    at,
+    value,
+    unit
+  }                                                                                       
+}
+`;
+
 export default () => {
+  return (
+    <Provider value={client}>
+      <MetricSelector />
+    </Provider>
+  );
+};
+
+const MetricSelector = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const selectedMetrics = useSelector(state => state.selectedMetrics);
+
+  // const [measurementRes] = useQuery({
+  //   query: measurementQuery,
+  //   variables: {
+  //     input: {
+  //       metricName: metricName,
+  //       before: heartBeat.before,
+  //       after: heartBeat.after
+  //     }
+  //   }
+  // });
+
+  // const { fetching, data, error } = measurementRes;
 
   return (
     <FormControl component="fieldset" className={classes.formControl}>

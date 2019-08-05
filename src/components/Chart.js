@@ -25,7 +25,7 @@ query($input: MeasurementQuery) {
     at,
     value,
     unit
-  }                                                                                                                                  
+  }                                                                                       
 }
 `;
 
@@ -35,8 +35,6 @@ const useStyles = makeStyles({
     padding: "5px 0"
   }
 });
-
-
 
 export default () => {
   return (
@@ -50,6 +48,7 @@ const Chart = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const heartBeat = useSelector(state => state.heartBeat);
+  const selectedMetrics = useSelector(state => state.selectedMetrics);
   const measurements = useSelector(state => state.measurements);
 
   const [measurementRes] = useQuery({
@@ -65,30 +64,27 @@ const Chart = () => {
 
   const { fetching, data, error } = measurementRes;
 
-  useEffect(
-    () => {
-      if (error) {
-        // console.log(error.message);
-        return;
-      }
-      if (!data) {
-        return;
-      } else {
-        const { getMeasurements } = data;
-
-        dispatch({
-          type: "GET_MEASUREMENTS",
-          payload: getMeasurements
-        })        
-      }
+  useEffect(() => {
+    if (error) {
+      // console.log(error.message);
+      return;
     }
-  );
+    if (!data) {
+      return;
+    } else {
+      const { getMeasurements } = data;
+      dispatch({
+        type: "GET_MEASUREMENTS",
+        payload: getMeasurements
+      });
+    }
+  });
 
   if (fetching) return <LinearProgress />;
 
   return (
     <Box className={classes.chartBox}>
-      {measurements.length ?
+      {measurements.length ? (
         <ResponsiveContainer width="100%" minWidth={300} aspect={16.0 / 9.0}>
           <LineChart
             // width={1000}
@@ -102,8 +98,9 @@ const Chart = () => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="at" />
-            <YAxis />
+            {/* <XAxis dataKey="at" /> */}
+            <XAxis domain={["auto", "auto"]} />
+            <YAxis domain={["auto", "dataMax + 1"]} />
             <Tooltip />
             <Line
               type="monotone"
@@ -115,9 +112,7 @@ const Chart = () => {
             {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
           </LineChart>
         </ResponsiveContainer>
-        : 
-        null
-      }
+      ) : null}
     </Box>
   );
 };
