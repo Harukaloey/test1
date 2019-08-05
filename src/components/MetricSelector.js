@@ -10,8 +10,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
-import { blue, grey } from "@material-ui/core/colors";
-import { Provider, createClient, useQuery } from "urql";
+import { grey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles({
   box: {
@@ -45,6 +44,24 @@ const useStyles = makeStyles({
   formGroup: {
     flexDirection: "row",
     justifyContent: "center"
+  },
+  tubingPressure: {
+    color: "green"
+  },
+  casingPressure: {
+    color: "blue"
+  },
+  oilTemp: {
+    color: "purple"
+  },
+  flareTemp: {
+    color: "red"
+  },
+  waterTemp: {
+    color: "teal"
+  },
+  injValveOpen: {
+    color: "black"
   }
 });
 
@@ -52,7 +69,7 @@ const EOGCheckbox = withStyles({
   root: {
     color: grey[500],
     "&$checked": {
-      color: blue[900]
+      color: grey[900]
     }
   },
   checked: {}
@@ -61,7 +78,8 @@ const EOGCheckbox = withStyles({
 const metricArray = [
   {
     value: "tubingPressure",
-    label: "Tubing Pressure"
+    label: "Tubing Pressure",
+    color: ""
   },
   {
     value: "casingPressure",
@@ -85,46 +103,13 @@ const metricArray = [
   }
 ];
 
-const client = createClient({
-  url: "https://react.eogresources.com/graphql"
-});
-
-const measurementQuery = `
-query($input: MeasurementQuery) {
-  getMeasurements(input: $input) {
-    metric,
-    at,
-    value,
-    unit
-  }                                                                                       
-}
-`;
-
 export default () => {
-  return (
-    <Provider value={client}>
-      <MetricSelector />
-    </Provider>
-  );
-};
-
-const MetricSelector = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const selectedMetrics = useSelector(state => state.selectedMetrics);
-
-  // const [measurementRes] = useQuery({
-  //   query: measurementQuery,
-  //   variables: {
-  //     input: {
-  //       metricName: metricName,
-  //       before: heartBeat.before,
-  //       after: heartBeat.after
-  //     }
-  //   }
-  // });
-
-  // const { fetching, data, error } = measurementRes;
+  const selectedMetric = useSelector(
+    state => state.selectedMetrics.selectedMetric
+  );
+  const measurements = useSelector(state => state.measurements);
 
   return (
     <FormControl component="fieldset" className={classes.formControl}>
@@ -133,12 +118,14 @@ const MetricSelector = () => {
       </FormLabel>
       <FormGroup className={classes.formGroup}>
         {metricArray.map((metric, i) => {
+          const isChecked = metric.value === selectedMetric;
           return (
             <Box className={classes.box} key={`metric${i}`}>
               <FormControlLabel
                 control={
                   <EOGCheckbox
-                    checked={selectedMetrics[metric.value]}
+                    // checked={selectedMetrics[metric.value]}
+                    checked={isChecked}
                     onChange={() =>
                       dispatch({
                         type: "SELECT_METRIC",
@@ -150,16 +137,21 @@ const MetricSelector = () => {
                 }
                 label={metric.label}
               />
-              <Card className={classes.card}>
-                <CardContent className={classes.cardContent}>
-                  <Typography
-                    className={classes.cardTitle}
-                    color="textSecondary"
-                  >
-                    {10000}
-                  </Typography>
-                </CardContent>
-              </Card>
+              {isChecked ? (
+                <Card className={classes.card}>
+                  <CardContent className={classes.cardContent}>
+                    <Typography className={classes.cardTitle}>
+                      <span className={classes[selectedMetric]}>
+                        {measurements.length ? (
+                          measurements[measurements.length - 1].value
+                        ) : (
+                          <>...</>
+                        )}
+                      </span>
+                    </Typography>
+                  </CardContent>
+                </Card>
+              ) : null}
             </Box>
           );
         })}

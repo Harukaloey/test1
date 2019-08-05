@@ -11,7 +11,8 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer
+  ResponsiveContainer,
+  Label
 } from "recharts";
 
 const client = createClient({
@@ -36,6 +37,22 @@ const useStyles = makeStyles({
   }
 });
 
+const getLabel = metricName => {
+  switch (metricName) {
+    case "tubingPressure":
+    case "casingPressure":
+      return "PSI";
+    case "oilTemp":
+    case "flareTemp":
+    case "waterTemp":
+      return "F";
+    case "injValveOpen":
+      return "%";
+    default:
+      return;
+  }
+};
+
 export default () => {
   return (
     <Provider value={client}>
@@ -48,14 +65,14 @@ const Chart = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const heartBeat = useSelector(state => state.heartBeat);
-  const selectedMetrics = useSelector(state => state.selectedMetrics);
+  const selectedMetric = useSelector(state => state.selectedMetrics.selectedMetric);
   const measurements = useSelector(state => state.measurements);
 
   const [measurementRes] = useQuery({
     query: measurementQuery,
     variables: {
       input: {
-        metricName: "oilTemp",
+        metricName: selectedMetric,
         before: heartBeat.before,
         after: heartBeat.after
       }
@@ -82,12 +99,22 @@ const Chart = () => {
 
   if (fetching) return <LinearProgress />;
 
+  const metricColors = {
+      tubingPressure: 'green',
+      casingPressure: 'blue',
+      oilTemp: 'purple',
+      flareTemp: 'red',
+      waterTemp: 'teal',
+      injValveOpen: 'black',
+  }
+
+  const label = getLabel(selectedMetric);
+
   return (
     <Box className={classes.chartBox}>
       {measurements.length ? (
         <ResponsiveContainer width="100%" minWidth={300} aspect={16.0 / 9.0}>
           <LineChart
-            // width={1000}
             height={600}
             data={measurements}
             margin={{
@@ -98,18 +125,18 @@ const Chart = () => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            {/* <XAxis dataKey="at" /> */}
             <XAxis domain={["auto", "auto"]} />
-            <YAxis domain={["auto", "dataMax + 1"]} />
+            <YAxis domain={["auto", "dataMax + 1"]}>
+              <Label value={label} position='insideLeft' offset='-2' />
+            </YAxis>
             <Tooltip />
             <Line
               type="monotone"
               dataKey="value"
-              stroke="#8884d8"
+              stroke={metricColors[selectedMetric]}
               activeDot={{ r: 6 }}
               dot={false}
             />
-            {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
           </LineChart>
         </ResponsiveContainer>
       ) : null}

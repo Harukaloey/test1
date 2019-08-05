@@ -1,10 +1,10 @@
 import { GET_MEASUREMENTS } from "../actions";
-import { GET_TUBING_PRESSURE } from "../actions";
-import { GET_CASING_PRESSURE } from "../actions";
-import { GET_OIL_TEMP } from "../actions";
-import { GET_FLARE_TEMP } from "../actions";
-import { GET_WATER_TEMP } from "../actions";
-import { GET_INJ_VALVE_OPEN } from "../actions";
+// import { GET_TUBING_PRESSURE } from "../actions";
+// import { GET_CASING_PRESSURE } from "../actions";
+// import { GET_OIL_TEMP } from "../actions";
+// import { GET_FLARE_TEMP } from "../actions";
+// import { GET_WATER_TEMP } from "../actions";
+// import { GET_INJ_VALVE_OPEN } from "../actions";
 
 const initialState = {
   tubingPressure: [],
@@ -29,11 +29,11 @@ export default (state = initialState, action) => {
       // });
 
       return measurements;
-    case GET_TUBING_PRESSURE:
-      return {
-        ...state,
-        tubingPressure: action.payload
-      }
+    // case GET_TUBING_PRESSURE:
+    //   return {
+    //     ...state,
+    //     tubingPressure: action.payload
+    //   }
     default:
       return state;
   }
