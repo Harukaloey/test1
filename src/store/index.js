@@ -5,12 +5,14 @@ import sagas from "./sagas";
 import weatherReducer from "./reducers/Weather";
 import metricReducer from "./reducers/MetricSelector";
 import heartBeatReducer from "./reducers/HeartBeat";
+import measurementsReducer from "./reducers/MeasurementData";
 
 export default () => {
   const rootReducer = combineReducers({
     weather: weatherReducer,
     selectedMetrics: metricReducer,
-    heartBeat: heartBeatReducer
+    heartBeat: heartBeatReducer,
+    measurements: measurementsReducer
   });
 
   const composeEnhancers = composeWithDevTools({});
